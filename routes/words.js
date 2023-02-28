@@ -22,4 +22,10 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.delete('/:_id', async (req, res) => {
+    const { _id } = req.params
+    await Word.findOneAndDelete({ _id: { $eq: _id } })
+    res.json({ message: 'Word deleted succesfully' })
+})
+
 export default router
