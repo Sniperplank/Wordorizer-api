@@ -6,9 +6,12 @@ const router = express.Router()
 router.post('/', async (req, res) => {
     const { word, definition, userId } = req.body
     try {
+        const existingWord = await Word.findOne({ word })
+        const existingMemWord = await MemorizedWords.findOne({ word })
+        if (existingWord || existingMemWord) return res.status(404).json({ message: "Word already added!" })
         const result = await Word.create({ word, definition, userId })
         res.status(200).json({ result })
-    } catch (err) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 })
@@ -34,7 +37,7 @@ router.post('/memorized', async (req, res) => {
     try {
         const result = await MemorizedWords.create({ word, definition, userId })
         res.status(200).json({ result })
-    } catch (err) {
+    } catch (error) {
         res.status(500).json({ message: error.message })
     }
 })
