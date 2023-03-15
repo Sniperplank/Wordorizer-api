@@ -5,6 +5,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import userRoutes from './routes/users.js'
 import wordRoutes from './routes/words.js'
+import defRoutes from './routes/definitions.js'
 import fs from 'fs'
 import readLine from 'readline'
 import Word from './models/word.js'
@@ -18,6 +19,7 @@ app.use(cors())
 
 app.use('/user', userRoutes)
 app.use('/word', wordRoutes)
+app.use('/definition', defRoutes)
 
 app.get('/', (req, res) => {
     res.send('wordorizor api')
