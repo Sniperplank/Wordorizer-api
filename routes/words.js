@@ -6,8 +6,8 @@ const router = express.Router()
 router.post('/', async (req, res) => {
     const { word, definition, userId } = req.body
     try {
-        const existingWord = await Word.findOne({ word })
-        const existingMemWord = await MemorizedWords.findOne({ word })
+        const existingWord = await Word.findOne({ word: word, userId: userId })
+        const existingMemWord = await MemorizedWords.findOne({ word: word, userId: userId })
         if (existingWord || existingMemWord) return res.status(404).json({ message: "Word already added!" })
         const result = await Word.create({ word, definition, userId })
         res.status(200).json({ result })
